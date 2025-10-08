@@ -1,0 +1,69 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Physical Therapy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+env:           
+  PROJECT-FOLDER : ${{ vars.PROJECT_FOLDER }} #        p2025
+  VITE_APP_BASE_URL: ${{ vars.VITE_APP_BASE_URL }} #  /p2025/
+  
+jobs:
+  check-secrets: 
+    runs-on: ubuntu-latest     
+    outputs:
+      data-available : ${{ steps.variables.outputs.data-available }}      
+    steps:    
+    - name: Check secrets 
+      id: variables
+      run: |                                 
+        echo "data-available=${{ secrets.USERNAME != '' && secrets.PASSWORD != '' && secrets.SERVER != '' }}" >> $GITHUB_OUTPUT              
+    
+  build-and-deploy:
+    needs: check-secrets 
+    if: needs.check-secrets.outputs.data-available == 'true'
+    runs-on: ubuntu-latest      
+    
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup variables
+      id: variables
+      run: |                                    
+        echo "zip-filename=V$GITHUB_RUN_NUMBER-$(date +'%Y-%m-%d').tar.gz" >> $GITHUB_OUTPUT           
+    - name: Print variables
+      run: |        
+        echo "Zip filename: ${{ steps.variables.outputs.zip-filename }}"                     
+    - name: Setup Node.js 22.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+        cache: 'npm'  
+    - run: npm ci    
+    - run: npm run build
+    - name: Compress      
+      run: |
+         cd ${{ github.workspace }}/dist
+         tar -cvzf ${{ github.workspace }}/${{ steps.variables.outputs.zip-filename }} .
+    - name: Copy to destination server      
+      uses: kostya-ten/ssh-server-deploy@v4
+      with:
+        host: ${{ secrets.SERVER }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        scp_source: "${{ github.workspace }}/${{ steps.variables.outputs.zip-filename }}"
+        scp_target: "/tmp/"          
+    - name: Unpack on destination server      
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script: |                   
+          rm -r /var/www/html/${{env.PROJECT-FOLDER}}/*
+          cd /var/www/html/${{env.PROJECT-FOLDER}}
+          tar -xvzf /tmp/${{ steps.variables.outputs.zip-filename }}  --no-overwrite-dir
+          rm /tmp/${{ steps.variables.outputs.zip-filename }}          

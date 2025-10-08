@@ -734,7 +734,8 @@ fabric.properties
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -1059,3 +1060,8 @@ $RECYCLE.BIN/
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,visualstudio,visualstudiocode,dotnetcore,aspnetcore,vuejs,vue,yarn,csharp,docfx,eclipse,intellij,rider
+
+
+# local .env files
+.env.local*
+.env
