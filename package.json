@@ -14,7 +14,11 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@schedule-x/calendar": "^3.3.0",
+    "@schedule-x/theme-default": "^3.3.0",
+    "@schedule-x/vue": "^3.2.0",
     "pinia": "^3.0.3",
+    "temporal-polyfill": "^0.3.0",
     "vue": "^3.5.22",
     "vue-router": "^4.5.1"
   },
