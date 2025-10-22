@@ -26,9 +26,9 @@ const calendarApp = createCalendar({
     individual: {
       colorName: 'individual',
       lightColors: {
-        main: '#3b82f6',
+        main: '#1E3D9E',
         container: '#dbeafe',
-        onContainer: '#1e3a8a',
+        onContainer: '#0f1f4f',
       },
     },
     group: {
@@ -41,24 +41,11 @@ const calendarApp = createCalendar({
     },
   },
   events: exampleEvents.map((event) => {
-    const userIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
-    const doctorIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2v20"/><path d="M15 10v4"/><path d="M19 10v4"/><path d="M3 10v4"/><path d="M7 10v4"/></svg>'
-    const roomIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M6 3v18"/><path d="M18 3v18"/><path d="M6 3h12"/></svg>'
-
     const content = `
       <div class="event-content">
-        <div class="event-line">
-          <span class="event-icon">${userIcon}</span>
-          <span>${getEventTitle(event)}</span>
-        </div>
-        <div class="event-line">
-          <span class="event-icon">${doctorIcon}</span>
-          <span>${event.doctorName}</span>
-        </div>
-        <div class="event-line">
-          <span class="event-icon">${roomIcon}</span>
-          <span>${event.room}</span>
-        </div>
+        <div class="event-line">${event.doctorName}</div>
+        <div class="event-line">${getEventTitle(event)}</div>
+        <div class="event-line">${event.room}</div>
       </div>
     `
     return {
@@ -85,6 +72,11 @@ const calendarApp = createCalendar({
 </template>
 
 <style>
+:root {
+  --sx-color-primary: #1E3D9E;
+  --sx-color-surface-dim: #e8effc;
+}
+
 .sx-vue-calendar-wrapper {
   width: 100%;
   height: 100vh;
@@ -95,21 +87,11 @@ const calendarApp = createCalendar({
 :deep(.event-content) {
   display: flex;
   flex-direction: column;
+  font-weight: bold;
 }
 
 :deep(.event-line) {
   display: flex;
   align-items: center;
-}
-
-:deep(.event-icon) {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  margin-right: 0.5rem;
-}
-
-:deep(.event-icon svg) {
-  display: block;
 }
 </style>
