@@ -18,11 +18,13 @@ import { translations, mergeLocales } from '@schedule-x/translations'
 const selectedDoctor = ref<string | null>(null)
 const selectedPatient = ref<string | null>(null)
 const selectedRoom = ref<string | null>(null)
+const selectedExercise = ref<string | null>(null)
 
 function clearAllFilters() {
   selectedDoctor.value = null
   selectedPatient.value = null
   selectedRoom.value = null
+  selectedExercise.value = null
 }
 
 const doctors = computed(() => {
@@ -43,6 +45,11 @@ const rooms = computed(() => {
   return uniqueRooms.sort()
 })
 
+const exercises = computed(() => {
+  const uniqueExercises = [...new Set(exampleEvents.map(e => e.exercise))]
+  return uniqueExercises.sort()
+})
+
 const filteredEvents = computed(() => {
   return exampleEvents.filter(event => {
     if (selectedDoctor.value && event.doctorName !== selectedDoctor.value) {
@@ -54,6 +61,9 @@ const filteredEvents = computed(() => {
     if (selectedRoom.value && event.room !== selectedRoom.value) {
       return false
     }
+    if (selectedExercise.value && event.exercise !== selectedExercise.value) {
+      return false
+    }
     return true
   })
 })
@@ -61,6 +71,7 @@ const filteredEvents = computed(() => {
 function mapEventToCalendarFormat(event: any) {
   const content = `
     <div class="event-content">
+      <div class="event-line">${event.exercise}</div>
       <div class="event-line">${event.doctorName}</div>
       <div class="event-line">${getEventTitle(event)}</div>
       <div class="event-line">${event.room}</div>
@@ -164,6 +175,18 @@ watch(filteredEvents, (newEvents) => {
           v-model="selectedRoom"
           :options="rooms"
           placeholder="Sve sobe"
+          :showClear="true"
+          filter
+          class="filter-select"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="exercise">Vježba</label>
+        <Select
+          v-model="selectedExercise"
+          :options="exercises"
+          placeholder="Sve vježbe"
           :showClear="true"
           filter
           class="filter-select"

@@ -9,11 +9,12 @@ export interface Event {
   doctorName: string
   patients: Patient[]
   room: string
+  exercise: string
 }
 
 export function getEventTitle(event: Event): string {
   if (event.patients.length > 1) {
-    return 'Grupne vježbe'
+    return ''
   }
   return event.patients[0]?.name ?? 'Bez pacijenta'
 }
