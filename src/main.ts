@@ -14,12 +14,20 @@ import '@/assets/styles.scss'
 
 const app = createApp(App)
 
+const isDeployed = window.location.origin.includes('zpr-120.fer.hr')
+
+// dynamic base URL and redirect URI
+const basePath = isDeployed ? '/p2025/' : '/'
+const redirectUri = isDeployed
+  ? 'https://zpr-120.fer.hr/p2025'
+  : 'http://localhost:5173'
+
 app.use(
   createAuth0({
     domain: 'dev-vvufctniwl0ae1qu.us.auth0.com',
     clientId: 'nb5GQLwh36jpF32RhGQqJKspJT5mCkyD',
     authorizationParams: {
-      redirect_uri: window.location.origin + '/p2025'
+      redirect_uri: redirectUri
     }
   })
 );

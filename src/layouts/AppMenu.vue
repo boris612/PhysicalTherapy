@@ -6,10 +6,13 @@ import { useAuth0 } from "@auth0/auth0-vue";
 const { logout } = useAuth0();
 
 const handleLogout = () => {
+  const isDeployed = window.location.origin.includes("zpr-120.fer.hr");
+  const returnTo = isDeployed
+    ? "https://zpr-120.fer.hr/p2025"
+    : "http://localhost:5173";
+
   logout({
-    logoutParams: {
-      returnTo: window.location.origin + "/p2025",
-    },
+    logoutParams: { returnTo },
   });
 };
 
