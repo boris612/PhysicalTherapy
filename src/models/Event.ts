@@ -1,6 +1,5 @@
-export interface Patient {
-  name: string
-}
+import { Patient } from "../models/Patient"
+
 
 export interface Event {
   id: number
