@@ -1,12 +1,13 @@
-import { Patient } from "../models/Patient"
-
+export interface EventPatient {
+  name: string
+}
 
 export interface Event {
   id: number
   startDate: string
   endDate: string
   doctorName: string
-  patients: Patient[]
+  patients: EventPatient[]
   room: string
   exercise: string
 }
