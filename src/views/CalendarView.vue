@@ -218,7 +218,7 @@ watch(filteredEvents, (newEvents) => {
 .calendar-container {
   width: 100%;
   height: 100vh;
-  padding: 2rem 20rem;
+  padding: 2rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
