@@ -5,11 +5,14 @@ import { STATUS } from '@/models/Therapist'
 import TherapistCard from '@/components/therapists/TherapistCard.vue'
 import TherapistModal from '@/components/therapists/TherapistModal.vue'
 
+// Get base URL from Vite config
+const baseUrl = import.meta.env.BASE_URL
+
 // hardcoded za sad
 const therapists = ref<Therapist[]>([
-  { id: 1, name: 'Dr. Ana Marić', specijalnost: 'Fizikalna medicina', kontakt: '+385 91 234 5678', email: 'ana.maric@example.com', status: STATUS.AKTIVAN, napomene: 'Iskustvo sa neurološkim pacijentima', radnoVrijeme: 'Pon-Pet: 08:00-16:00', profilePicture: '/images/therapists/ana-maric.png' },
-  { id: 2, name: 'Dr. Marko Babić', specijalnost: 'Sportska medicina', kontakt: '+385 98 876 5432', email: 'marko.babic@example.com', status: STATUS.AKTIVAN, napomene: 'Specijalist za sportske ozljede', radnoVrijeme: 'Pon-Pet: 09:00-17:00', profilePicture: '/images/therapists/marko-babic.png' },
-  { id: 3, name: 'Dr. Stjepan Grgić', specijalnost: 'Kineziterapija', kontakt: '+385 99 222 3333', email: 'stjepan.grgic@example.com', status: STATUS.AKTIVAN, napomene: 'Stručnjak za rehabilitaciju', radnoVrijeme: 'Pon-Pet: 10:00-18:00', profilePicture: '/images/therapists/stjepan-grgic.png' }
+  { id: 1, name: 'Dr. Ana Marić', specijalnost: 'Fizikalna medicina', kontakt: '+385 91 234 5678', email: 'ana.maric@example.com', status: STATUS.AKTIVAN, napomene: 'Iskustvo sa neurološkim pacijentima', radnoVrijeme: 'Pon-Pet: 08:00-16:00', profilePicture: `${baseUrl}images/therapists/ana-maric.png` },
+  { id: 2, name: 'Dr. Marko Babić', specijalnost: 'Sportska medicina', kontakt: '+385 98 876 5432', email: 'marko.babic@example.com', status: STATUS.AKTIVAN, napomene: 'Specijalist za sportske ozljede', radnoVrijeme: 'Pon-Pet: 09:00-17:00', profilePicture: `${baseUrl}images/therapists/marko-babic.png` },
+  { id: 3, name: 'Dr. Stjepan Grgić', specijalnost: 'Kineziterapija', kontakt: '+385 99 222 3333', email: 'stjepan.grgic@example.com', status: STATUS.AKTIVAN, napomene: 'Stručnjak za rehabilitaciju', radnoVrijeme: 'Pon-Pet: 10:00-18:00', profilePicture: `${baseUrl}images/therapists/stjepan-grgic.png` }
 ])
 
 const search = ref('')
